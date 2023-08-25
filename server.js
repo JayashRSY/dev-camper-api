@@ -1,14 +1,17 @@
 const express = require("express");
 const dotenv = require("dotenv");
+// Load env vars
+dotenv.config({ path: './config/config.env' });
 const logger = require('./middleware/logger');
 const morgan = require('morgan')
 const colors = require('colors')
 const errorHandler = require('./middleware/error')
 const connectDB = require('./config/db')
+
 // Routes files
 const bootcamps = require('./routes/bootcamps');
-// Load env vars
-dotenv.config({ path: './config/config.env' });
+const courses = require('./routes/courses');
+
 connectDB();
 const app = express();
 app.use(express.json());
@@ -18,7 +21,10 @@ if (process.env.NODE_ENV === 'development') {
 }
 // Mount routers
 app.use('/api/v1/bootcamps', bootcamps);
+app.use('/api/v1/courses', courses);
+
 app.use(errorHandler);
+
 const PORT = process.env.PORT || 3000;
 app.listen(
     PORT,
