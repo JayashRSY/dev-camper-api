@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require("express");
 const dotenv = require("dotenv");
 // Load env vars
@@ -5,8 +6,10 @@ dotenv.config({ path: './config/config.env' });
 const logger = require('./middleware/logger');
 const morgan = require('morgan')
 const colors = require('colors')
+const fileupload = require('express-fileupload')
 const errorHandler = require('./middleware/error')
 const connectDB = require('./config/db')
+// var cors = require('cors')
 
 // Routes files
 const bootcamps = require('./routes/bootcamps');
@@ -19,7 +22,16 @@ app.use(express.json());
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
 }
-// Mount routers
+
+// Enable CORS
+// app.use(cors());
+
+// File uploading
+app.use(fileupload());
+// Set static folder
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Mount routers to the server
 app.use('/api/v1/bootcamps', bootcamps);
 app.use('/api/v1/courses', courses);
 
