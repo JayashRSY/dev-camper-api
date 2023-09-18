@@ -97,6 +97,11 @@ const BootcampSchema = new mongoose.Schema({
     createdAt: { // This is a validator
         type: Date,
         default: Date.now
+    },
+    user: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User',
+        required: true // This is a validator
     }
 }, {
     toJSON: { virtuals: true },
