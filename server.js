@@ -61,6 +61,10 @@ app.use(cors());
 // Set static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Default root path for API documentation
+app.get('/', function (req, res) {
+    res.redirect('https://documenter.getpostman.com/view/22681670/2s9YC8wAoA');
+})
 // Mount routers to the server
 app.use('/api/v1/auth', auth);
 app.use('/api/v1/bootcamps', bootcamps);
